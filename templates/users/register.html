@@ -1,0 +1,48 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+    <div class="form-body without-side">
+        <div class="website-logo">
+            <a href="index.html">
+                <div class="logo">
+                    <img class="logo-size" src="{{setting.title}}" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img src="{% static 'images/banner-2.svg' %}" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                   
+                        <h3>Register new account</h3>
+                        <p>Access to the most powerfull tool in the entire design and web industry.</p>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" name="username" placeholder="Имя пользователя" required>
+                            <input class="form-control" type="email" name="email" placeholder="Почта" required>
+                            <input class="form-control" type="password" name="password" placeholder="Пароль" required>
+                            <input class="form-control" type="password" name="confirm_password" placeholder="Повторите пороль" required>
+                            <div class="form-button">
+                                <button id="submit" type="submit" class="ibtn">Зарегистрироватся</button>
+                            </div>
+                        </form>
+                        <div class="other-links">
+                            <div class="text">Or register with</div>
+                            <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a><a href="#"><i class="fab fa-google"></i>Google</a><a href="#"><i class="fab fa-linkedin-in"></i>Linkedin</a>
+                        </div>
+                        <div class="page-links">
+                            <a href="login17.html">Login to account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
