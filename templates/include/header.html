@@ -60,8 +60,11 @@
                 <li><a href="activity.html" class="sub-menu-item"> Новости</a></li>
 
                 <li><a href="wallet.html" class="sub-menu-item">О нас</a></li>
-
-               
+                {% if request.user.status_user == False %}
+                <li><a href="{% url 'status_user' user.id %}" class="sub-menu-item">Работать с нами</a></li>
+                {% else %}
+                <li><a href="{№}" class="sub-menu-item">Создать объявление</a></li>
+                {% endif %}
                 
                 <li><a href="{#}" class="sub-menu-item">Контакты</a></li>
                 {% if request.user.is_authenticated %}

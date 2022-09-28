@@ -56,7 +56,8 @@
                                         
                                     </div>
                                     <div class="tab-content">
-                                    <form id="hotels-tab" class="tab-pane form-inline reservation-hotel active" method="post" name="reservationform">
+                                        <form role="search" action="{% url 'hotel_search' %}" id="searchItemform" class="searchform">
+                                        {% csrf_token %}
                                       <div class="row">
                                         <div style="display: flex; margin-left: 200px">
                                        
@@ -64,41 +65,39 @@
                                           <div class="form-group">
                                             <div class="content-checkin-data">
                                                 <i class="flaticon-map"></i>
-                                                    <select name="adults" id="Select1" class="form-control">
-                                                        <option  class="opt-default" selected="selected">Куда хотите поехать?</option>
-                                                        {% for place in places %}
-                                                        <option value="1">{{place.slug}}</option>
-                                                        {% endfor %}
-                                                      </select>
-                                                </div>
-                                                 
-                                          </div>
-                                        </div>
-                                        <div class="col-md-2 departure-date step-where">
-                                    
-                                              <div class="form-group">
-                                              
-<i class="flaticon-appointment"></i>
-                                                <input type="text" id="datepicker" data-provide="datepicker" class="field-input calendar-input" placeholder="Дата отправления">
-                                              </div>
-                                            
-                                        </div>
-                                        <div class="col-md-2 departure-date step-where">
-                                    
-                                              <div class="form-group">
-                                              
-<i class="flaticon-appointment"></i>
-                                                <input type="text" id="datepicker1" data-provide="datepicker" class="field-input calendar-input" placeholder="Дата возврата">
-                                              </div>
+                                                
+                                                    <input type="text" name = 'key' class="form-control border rounded shadow" name="s" id="s" placeholder="Искать...">
+                                                
+                                            </div>
                                             
                                         </div>
                                     </div>
-     
-                                        <div class="col-md-12">
-                                          <div class="form-group">
-                                            <form></form>
-                                           <button type="submit" class="banner-btn">Поиск</button>
-                                            </div>
+                                    <div class="col-md-2 departure-date step-where">
+                                        
+                                        <div class="form-group">
+                                            
+                                            <i class="flaticon-appointment"></i>
+                                            <input type="text" id="datepicker" data-provide="datepicker" class="field-input calendar-input" placeholder="Дата отправления">
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-2 departure-date step-where">
+                                        
+                                        <div class="form-group">
+                                            
+                                            <i class="flaticon-appointment"></i>
+                                            <input type="text" id="datepicker1" data-provide="datepicker" class="field-input calendar-input" placeholder="Дата возврата">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        
+                                        
+                                        <input type="submit" class="banner-btn" id="searchItemsubmit" value="Search">
+                                    </div>
                                           </div>
                                         
                                       </div>
@@ -151,7 +150,7 @@
                   
                     </div>
                     <div class="about-btn travel-btn">                    
-						<a href="{% url 'about_us' %}" class="">Узнайте больше</a>
+						<a href="{% url 'about_us' %}" class="btn btn-pills btn-primary">Узнайте больше</a>
 					</div>
                 </div>
                 
@@ -194,7 +193,7 @@
             <div class="row justify-content-center text-center">
             <div class="col-md-6">
                     <div class="sub-header">
-                        <h3>The places where most of the visitor come</h3>                     
+                        <h3>Места, куда приходит больше всего посетителей</h3>                     
                     </div>
                 </div>
             </div>         
@@ -227,9 +226,9 @@
                                             <div class="overlay">
                                                 <div class="overlay_shape">
                                                    
-                                                    <a href="#" class="over-btn" style="margin-top: -50px;" >10 photos</a>
-                                                    <h2>{{place.place.title}}</h2>
-                                                    <a href="{% url 'hotel' place.slug.slug %}" class="view-all">{{place.nation}}<i class="fas fa-long-arrow-alt-right"></i></a>
+                                                    <a href="{% url 'hotel' place.slug.slug %}" class="over-btn" style="margin-top: -50px;" >{{place.all.count}}</a>
+                                                    <a href="{% url 'hotel' place.slug.slug %}"><h2>{{place.slug}}</h2></a>
+                                                    <a href="{% url 'hotel' place.slug.slug %}" class="view-all">{{place.nation}}</a>
                                                 </div>
                                             </div>
                                        
@@ -247,7 +246,7 @@
                 </div>
                 <div class="col-md-12 text-center place-border">
                     <div class="about-btn travel-btn">                    
-						<a href="popular.html" class="btn-4">Посмотреть все места</a>
+						<a href="{% url 'popular' %}" class="btn-4">Посмотреть все места</a>
 					</div>
                 </div>
             </div>

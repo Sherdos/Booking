@@ -629,7 +629,7 @@ select{
 .travel-btn:after {
     position: absolute;
     content: '';
-    background: url(../images/sign-back.png) no-repeat;
+    
     height: 50px;
     width: 162px;
     border-radius: 5px;
@@ -745,7 +745,7 @@ select{
     left: 50%;
     transform: translate(-50%, -50%);
     width: 290px;
-    cursor: auto;
+    cursor: pointer;
 }
 .overlay_shape .view-all{
     color: #fff;

@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -14,6 +15,10 @@ class User(AbstractUser):
         max_length=100,
         verbose_name="Телефонный номер",
         blank = True, null = True
+    )
+    status_user = models.BooleanField(
+        verbose_name = 'Статус пользователя',
+        default = False
     )
     def __str__(self):
         return self.username

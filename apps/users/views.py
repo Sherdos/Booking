@@ -1,3 +1,5 @@
+from multiprocessing import context
+from re import T
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render,redirect
 from apps.settings.models import Setting
@@ -40,4 +42,21 @@ def login_user(request):
     
     }
     return render(request, 'users/login.html', context)
+
+def status_user(request, id):
+    user = User.objects.get(id=id)
+    setting = Setting.objects.latest('id')
+    if request.method == 'POST':
+        if user.status_user == False:
+            user.status_user = True
+            user.save()
+            return redirect('index')
+        else:
+            return redirect('index')
+
+    context = {
+        'user' :user,
+        'setting': setting
+    }
+    return render(request, 'hotel/status_user.html', context )
 

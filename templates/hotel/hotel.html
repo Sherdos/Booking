@@ -1,0 +1,226 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+    <!--=============
+    Preloader Part HTML Start
+    ===================-->
+    <div id="preloader">
+        <div id="loading-center">
+            <img src="images/white.gif" alt="">
+        </div>
+    </div>
+    <!--=============
+    Preloader Part HTML End
+    ===================-->
+    <!-- ===================
+       back to top start 
+     =================== -->
+    <a href="#" id="back-top-btn">
+        <i class="fas fa-angle-double-up"></i>
+    </a>
+    <!-- ===================
+       back to top End 
+     =================== -->
+    <!--================================================
+                      MENU PART START
+    ==================================================-->
+    {% include 'include/header.html' %}
+    <!--================================================
+                       MENU PART END
+    ==================================================-->
+
+
+
+    <!--================================================
+                       Inner BANNER PART START
+    ==================================================-->
+    <section id="inner_banner" class="inner_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="inner-text">
+                        <h2>Отели</h2>
+                        <div class="inner-link">
+                            <span><a href="{% url 'index' %}">Домой</a></span>
+                            <span>/</span>
+                            <span><a href="#">Отели</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================================================
+                        Inner BANNER PART END
+    ==================================================-->
+
+
+    <!--=====================
+    Tour Packages Part HTML Start
+    =======================-->
+    <section id="tour-package" class="tour tour-other section">
+        <div class="container">
+
+            <div class="row">
+                {% for hotel in places.place_slug.all %}
+                <div class="col-md-4">
+                    <div class="travel-place">
+                        <div class="work-image">
+                            <img src="{{hotel.image.url}}" class="img-fluid person" style="height: 250px;" alt="destination">
+                            <div class="overlay">
+                                <div class="overlay_shape">
+                                    <a href="#" class="over-btn" style="margin-top: -50px;">20 photos</a>
+                                    <a href="{% url 'detail_hotel' hotel.id %}" class="view-all">View All Places</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="travel-text">
+                            <a href="{% url 'detail_hotel' hotel.id %}"><h3>{{hotel.title}}</h3></a>
+                            <p>за 2 дня <span>|</span>{{hotel.price}}{{hotel.currency}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </section>
+    <!--=====================
+    Tour Packages Part HTML End
+    =======================-->
+
+    <!-- =============================
+        Start: News Letter
+    ============================= -->
+    <section id="news" class="newsletter tour-news">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-12 news-inner">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="news-text">
+                                <h3>Subscribe to Our Newsletter</h3>
+                                <p>If you Subscribe to our newsletter, we’ll send you the best deals for you and updates.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="subscribe-search">
+                                <form action="#">
+                                    <div class="input-group">
+                                        <input type="email" id="destination3" class="field-input" value="Your e-mail here" onfocus="if(this.value  == 'Your e-mail here') { this.value = ''; } " onblur="if(this.value == '') { this.value = 'Your e-mail here'; } " />
+                                        <span class="input-group-btn">
+                                            <a class="button-form">Subscribe</a>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =============================
+        End: News Letter
+    ============================= -->
+
+
+    <!-- =======================
+        footer Start 
+    ========================== -->
+    <footer id="contact" class="contact">
+        <div class="container">
+            <div class="row contact-part">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="footer-add">
+                        <img src="images/footer-logo.png" class="img-fluid" alt="logo">
+                        <div class="row footer-ad-txt footer-top">
+                            <div class="col-lg-4 col-md-4 col-4">
+                                <h3>Address :</h3>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-8">
+                                <ul>
+                                    <li>420 Rankin Street Avenue</li>
+                                    <li>London City Center,</li>
+                                    <li>United Kingdom</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row footer-ad-txt">
+                            <div class="col-4">
+                                <h3>Phone :</h3>
+                            </div>
+                            <div class="col-8">
+                                <ul>
+                                    <li>+442012345678</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row footer-ad-txt footer-bot">
+                            <div class="col-4">
+                                <h3>Website :</h3>
+                            </div>
+                            <div class="col-8">
+                                <ul>
+                                    <li> www.travelagency.com</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="con-inner">
+                        <h2>Help & Support</h2>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Cookie policy</a></li>
+                            <li><a href="#">Terms of use</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="con-inner">
+                        <h2>Important Search</h2>
+                        <ul>
+                            <li><a href="#">Countries </a></li>
+                            <li><a href="#">Cities</a></li>
+                            <li><a href="#">Districts</a></li>
+                            <li><a href="#">Airports</a></li>
+                            <li><a href="#">Hotels</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                    <div class="con-inner">
+                        <h2>Follow us on</h2>
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i>Twitter</a></li>
+                            <li><a href="#"><i class="fab fa-tripadvisor"></i>tripadvisor</a></li>
+                            <li><a href="#"><i class="fab fa-linkedin"></i>Linkedin</a></li>
+                            <li><a href="#"><i class="fab fa-behance"></i>Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer">
+                        <p>Copyright © 2020. All rights reserved by Designer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- =====================
+     footer end 
+     ===================== -->
+
+
+{% endblock %}

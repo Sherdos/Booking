@@ -98,17 +98,17 @@
                     <div class="tab-content" id="pills-tabContent1">
                         <div class="tab-pane fade show active" id="pills-all1" role="tabpanel" aria-labelledby="pills-all-tab1">
                             <div class="row work-cont-1">
-                                {% for hotel in places.place_slug.all %}
+                                {% for place in places %}
                                 <div class="col-lg-3 col-md-6 place-col">
                                     <div class="work-image">
-                                        <img src="{{hotel.image.url}}" class="img-fluid person" style="height: 250px;" alt="destination">
+                                        <img src="{{place.image_rest.url}}" class="img-fluid person" style="height: 250px;" alt="destination">
                                         <div class="overlay">
                                                 <div class="overlay_shape">
                                                    
                                                     <a href="#" class="over-btn" style="margin-top: -50px;">10 photos</a>
-                                                    <a href=""><h2>{{hotel.title}}</h2></a>
+                                                    <a href="{% url 'hotel' place.slug.slug %}"><h2>{{place.slug}}</h2></a>
                                                     
-                                                    <a href="#" class="view-all"> {{hotel.price}} {{hotel.currency}}</a>
+                                                    <a href="#" class="view-all"> {{place.price}} {{place.currency}}</a>
                                                 </div>
                                             </div>
                                     </div>

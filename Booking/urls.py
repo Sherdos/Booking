@@ -25,9 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('about_us', about_us, name='about_us' ),
-    path('user/', include('apps.users.urls')),
+    path('user', include('apps.users.urls')),
     path('logout/', LogoutView.as_view(next_page = 'index'), name = 'logout'),
     path('', include('apps.places.urls') ),
+    path('detail/hotel', include('apps.hotels.urls'))
 ]
     
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
