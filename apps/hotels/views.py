@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from apps.settings.models import Setting
+from apps.settings.models import Currency, Setting
 from apps.places.models import Places
 from apps.hotels.models import Hotel
 # Create your views here.
@@ -36,10 +36,29 @@ def hotel_search(request):
     setting = Setting.objects.latest('id')
     search_key = request.GET.get('key')
     if search_key:
-        hotels = Hotel.objects.filter(Q(slug__slug__icontains = search_key))
+        hotels = Hotel.objects.filter(Q(city__title__icontains = search_key))
     context = {
         'hotels' : hotels,
         'setting' : setting,
     }
     return render(request, 'hotel/search_hotels.html', context)
 
+def create_hotel(request):
+    setting = Setting.objects.latest('id')
+    currency = Currency.objects.all()
+    places = Places.objects.all()
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        city = request.POST.get('city')
+        price = request.POST.get('price')
+        currency = request.POST.get('currency')
+        hotel = Hotel.objects.create(user = request.user, title = title, description = description, city_id = city, image = image, price = price, currency_id = currency)
+        return redirect('index')
+    context = {
+        'setting' : setting,
+        'currency':currency,
+        'places':places
+     }
+    return render(request, 'hotel/create_hotel.html', context)

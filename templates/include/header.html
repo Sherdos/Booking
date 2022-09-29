@@ -63,7 +63,7 @@
                 {% if request.user.status_user == False %}
                 <li><a href="{% url 'status_user' user.id %}" class="sub-menu-item">Работать с нами</a></li>
                 {% else %}
-                <li><a href="{№}" class="sub-menu-item">Создать объявление</a></li>
+                <li><a href="{% url 'create_hotel' %}" class="sub-menu-item">Создать объявление</a></li>
                 {% endif %}
                 
                 <li><a href="{#}" class="sub-menu-item">Контакты</a></li>
