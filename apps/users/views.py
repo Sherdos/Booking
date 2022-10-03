@@ -58,5 +58,5 @@ def status_user(request, id):
         'user' :user,
         'setting': setting
     }
-    return render(request, 'hotel/status_user.html', context )
+    return render(request, 'users/status_user.html', context )
 

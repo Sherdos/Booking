@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*1l!a(tg+h@+ug=kern=fkuqd6s-5m_#ll@6(0_!=yujx&ket+'
+SECRET_KEY = os.environ.get('django-insecure-*1l!a(tg+h@+ug=kern=fkuqd6s-5m_#ll@6(0_!=yujx&ket+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,12 +50,15 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    
 ]
 
 ROOT_URLCONF = 'Booking.urls'
@@ -81,13 +85,16 @@ WSGI_APPLICATION = 'Booking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASES = {     
+		'default': {
+      	'ENGINE': 'django.db.backends.postgresql',
+      	'HOST' : os.environ.get('POSTGRES_HOST', 'ec2-3-93-206-109.compute-1.amazonaws.com'),
+      	'NAME': os.environ.get('POSTGRES_DB', 'd7181q97ef8udh'),
+      	'USER': os.environ.get('POSTGRES_USER', 'qscnrtjhmfwwtq'),
+      	'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '24b7ea43a7b53c199a98b72ff8cc386108893911c6357d5a578f15b55946a3e2'),
+      	'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -118,6 +125,13 @@ TIME_ZONE = 'Asia/Bishkek'
 USE_I18N = True
 
 USE_TZ = True
+
+
+EMAIL_USE_TLS = True 
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587 
+EMAIL_HOST_USER = 'zaparovsherdos7@gmail.com' 
+EMAIL_HOST_PASSWORD = 'ojczhrbpmmepwhdh'
 
 
 # Static files (CSS, JavaScript, Images)

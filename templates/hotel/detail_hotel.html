@@ -95,7 +95,13 @@
           </div>
           <div class="col-lg-5 col-md-12">
             <img src="{{hotels.image.url}}" class="img-fluid" style="height: 300px;" alt="img" />
-            <button class="btn btn-warning" style="margin-top: 15px;">Забронировать отель</button>
+
+        <div class="" style="display: flex;">
+          <input type="text" placeholder="Количество дней">
+          <a href="{% url 'booking' hotels.id %}" class="btn btn-warning"  style="margin-top: 15px;">Забронировать отель</a>
+        </div>
+        
+            
           </div>
         </div>
        
@@ -158,118 +164,49 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 comments-details">
-            <div class="row">
-              <div class="blog_comments">
-                <div class="media media_first media-middle">
-                  <div class="media-left">
-                    <img
-                      src="images/blog-comment-1.jpg"
-                      class="img-fluid"
-                      alt="media-img"
-                    />
+            {% for com in commen %}
+            <div class="card mb-4">
+              <div class="card-body">
+                <p>{{ com.comment }}</p>
+    
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex flex-row align-items-center">
+                    {% if com.user.profile_image %}
+                    <a href="#"><img src="{{ com.user.profile_image.url }}" alt="avatar" style = "border-radius: 30px;" width="25" height="25"/></a>
+                    {% else %}
+                    <a href="#"><img src="https://hope.be/wp-content/uploads/2015/05/no-user-image.gif" alt="avatar" style = "border-radius: 30px;" width="25" height="25"/></a>
+                    {% endif %}
+                    <a href="#" style="text-decoration: none; color:black"><p class="small mb-0 ms-2">{{ com.user }}</p></a>
                   </div>
-                  <div class="media-body">
-                    <div class="media">
-                      <div class="media-body blog_media">
-                        <h3 class="media-heading">
-                          Alex Mathew <span>Posted on: 16 April 2020</span>
-                        </h3>
-                        <p>
-                          hen after before symphony book.Lorem Ipsum has
-                          beenry's staay text ever since the.Lom Isum is simly.
-                        </p>
-                        <a href="#">
-                          <i class="fa fa-reply-all" aria-hidden="true"></i>
-                          Reply
-                        </a>
-                      </div>
-                    </div>
-
-                    <!-- Nested media object -->
-                    <div class="media media-middle">
-                      <div class="media-left">
-                        <img
-                          src="images/blog-comment-2.jpg"
-                          class="img-fluid"
-                          alt="media-img"
-                        />
-                      </div>
-                      <div class="media-body">
-                        <div class="media-body blog_media">
-                          <h3 class="media-heading">
-                            Redwan Barri <span>Posted on: 20 April 2020</span>
-                          </h3>
-                          <p>
-                            hen after before symphony book.Lorem Ipsuas beenry's
-                            staardummy.
-                          </p>
-                          <a href="#">
-                            <i class="fa fa-reply-all" aria-hidden="true"></i>
-                            Reply
-                          </a>
-                          <!-- Nested media object -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="media media-middle">
-                  <div class="media-left">
-                    <img
-                      src="images/blog-comment-3.jpg"
-                      class="img-fluid"
-                      alt="media-img"
-                    />
-                  </div>
-                  <div class="media-body blog_media">
-                    <h3 class="media-heading">
-                      Asha Khan <span>Posted on: 26 April 2019</span>
-                    </h3>
-                    <p>
-                      hen after before symphony book.Lorem Ipsum has beenry's
-                      staay text ever since the.Lom Isum is simly.
-                    </p>
-                    <a href="#">
-                      <i class="fa fa-reply-all" aria-hidden="true"></i> Reply
-                    </a>
-                    <!-- Nested media object -->
+                  <div class="d-flex flex-row align-items-center">
+                    <p class="small text-muted mb-0"> {{com.created}}</p>
+                    
+                    
                   </div>
                 </div>
               </div>
             </div>
+            {% endfor %}
           </div>
           <div class="col-md-6">
             <div class="comments-title d-md-none d-lg-none">
               <h4>Leave a Reply</h4>
             </div>
+            <form method="post">
+              {% csrf_token %}
             <div class="row form-detail blogdetails_form">
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Name" />
-                </div>
-              </div>
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="E-mail"
-                  />
-                </div>
-              </div>
+           
               <div class="col-12 col-md-12">
                 <div class="form-group">
-                  <textarea
-                    name="txtarea"
-                    placeholder="Your message"
-                  ></textarea>
+                 <input type="text" name="comment">
                 </div>
               </div>
               <div class="col-12 col-md-12">
                 <div class="blog_grid_btn">
-                  <a href="" class="bro-btn2">submit</a>
+                  <button class="btn btn-primary" name="comments" >Отправить</button>
                 </div>
               </div>
+            </form>
               <div class="detail-btn-bottom">
                 <p>Or Login with <a href="#">Facebook</a></p>
               </div>
@@ -290,6 +227,7 @@
         <div class="row justify-content-center text-center">
           <div class="col-md-12 news-inner">
             <div class="row">
+              
               <div class="col-lg-6 col-md-12">
                 <div class="news-text">
                   <h3>Subscribe to Our Newsletter</h3>
