@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import django_heroku
 import dj_database_url
+import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-*1l!a(tg+h@+ug=kern=fkuqd6s-5m_#ll@6(0_!=yujx&ket+')
+SECRET_KEY = config.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,15 +89,10 @@ WSGI_APPLICATION = 'Booking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {     
-		'default': {
-      	'ENGINE': 'django.db.backends.postgresql',
-      	'HOST' : os.environ.get('POSTGRES_HOST', 'ec2-52-200-5-135.compute-1.amazonaws.com'),
-      	'NAME': os.environ.get('POSTGRES_DB', 'deus7qeiq333kq'),
-      	'USER': os.environ.get('POSTGRES_USER', 'lvlkkpzasfkzwf'),
-      	'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '3ee88e9f6f08d698f6a6397a149c8be33fd72625fd68c236b864617f326a0bcb'),
-      	'PORT': os.environ.get('POSTGRES_PORT', '5432'),
-        
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -130,6 +126,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+EMAIL_USE_TLS = config.EMAIL_USE_TLS 
+EMAIL_HOST = config.EMAIL_HOST
+EMAIL_PORT = config.EMAIL_PORT
+EMAIL_HOST_USER = config.EMAIL_HOST_USER 
+EMAIL_HOST_PASSWORD = config.EMAIL_HOST_PASSWORD
 
 
 

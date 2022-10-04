@@ -1,41 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Travel- 404</title>
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
 
-    <!--================================================
-                   CSS LINK PART START
-    ==================================================-->
-    <link rel="icon" href="images/favicon.png" />
-    <link rel="stylesheet" href="font/flaticon.css" />
-    <link rel="stylesheet" href="css/all.min.css" />
-    <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="css/dd.css" />
-    <link rel="stylesheet" href="css/jquery-ui.min.css" />
-    <link href="css/jquery.fancybox.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/slick.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/style-1.css" />
-    <link rel="stylesheet" href="css/responsive-1.css" />
-    <!--================================================
-                   CSS LINK PART END
-    ==================================================-->
-  </head>
 
-  <body>
-    <!--=============
-    Preloader Part HTML Start
-    ===================-->
-    <div id="preloader">
-      <div id="loading-center">
-        <img src="images/white.gif" alt="" />
-      </div>
-    </div>
     <!--=============
     Preloader Part HTML End
     ===================-->
@@ -51,75 +18,7 @@
     <!--================================================
                       MENU PART START
     ==================================================-->
-    <header>
-      <nav
-        id="nav-part"
-        class="navbar header-nav custom_nav navbar-expand-md other-page"
-      >
-        <div class="container p-0">
-          <a class="navbar-brand" href="index.html"
-            ><img src="images/header-logo.png" class="img-fluid" alt="logo"
-          /></a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <div
-            class="collapse navbar-collapse justify-content-end"
-            id="navbarSupportedContent"
-          >
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html"
-                  >Home<span class="sr-only">(current)</span></a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="popular.html">Popular Destination </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="tourpackage.html">Tour Packages</a>
-              </li>
-              <li class="dropdown nav-item">
-                <a
-                  href=""
-                  class="nav-link dropdown-toggle active"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >pages</a
-                >
-                <ul class="dropdown-menu maindrop_menu">
-                  <li><a href="about-us.html">About Us</a></li>
-                  <li><a href="404-page.html">404 page</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact</a>
-              </li>
-            </ul>
-            <ul class="login_menu navbar-right nav-sign">
-              <li class="login">
-                <a href="#" class="btn-4">Sign up / login</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+
     <!--================================================
                        MENU PART END
     ==================================================-->
@@ -277,25 +176,4 @@
     <!-- =====================
      footer end 
      ===================== -->
-
-    <!--================================================
-                JAVA SCRIPT LINK PART START
-    ==================================================-->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/jquery-migrate-3.0.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.fancybox.min.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/SmoothScroll.js"></script>
-    <script src="js/slick.min.js"></script>
-    <script src="js/script.js"></script>
-    <!--================================================
-                JAVA SCRIPT LINK PART END
-    ==================================================-->
-  </body>
-</html>
+{% endblock %}

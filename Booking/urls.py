@@ -18,13 +18,13 @@ from django.urls import path, include
 from apps.settings.views import index
 from django.conf import settings
 from django.conf.urls.static import static
-from apps.settings.views import about_us
+
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('about_us', about_us, name='about_us' ),
+    path('index/', include('apps.settings.urls') ),
     path('user', include('apps.users.urls')),
     path('logout/', LogoutView.as_view(next_page = 'index'), name = 'logout'),
     path('', include('apps.places.urls') ),

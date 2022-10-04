@@ -59,7 +59,7 @@
                 
                 <li><a href="activity.html" class="sub-menu-item"> Новости</a></li>
 
-                <li><a href="wallet.html" class="sub-menu-item">О нас</a></li>
+                <li><a href="{% url 'about_us' %}" class="sub-menu-item">О нас</a></li>
                 {% if request.user.status_user == False %}
                 <li><a href="{% url 'status_user' user.id %}" class="sub-menu-item">Работать с нами</a></li>
                 {% else %}

@@ -859,7 +859,7 @@ select{
 .tour .travel-btn:after {
     position: absolute;
     content: '';
-    background: url(../images/place-btn.png) no-repeat;
+    
     height: 50px;
     width: 210px;
     border-radius: 5px;

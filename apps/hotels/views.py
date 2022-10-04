@@ -1,4 +1,5 @@
 
+
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from apps.settings.models import Currency, Setting
@@ -23,6 +24,7 @@ from django.core.mail import send_mail
 
 def detail_hotel(request, id):
     setting = Setting.objects.latest('id')
+    currency = Currency.objects.all()
     hotels = Hotel.objects.get(id=id)
     hotel = Hotel.objects.all()
     hotel_class = Class.objects.all()
@@ -37,6 +39,7 @@ def detail_hotel(request, id):
         'setting':setting,
         'hotels':hotels,
         'hotel':hotel,
+        'currency':currency,
         'hotel_people':hotel_people,
         'hotel_class': hotel_class,
         'commen': commen
@@ -48,11 +51,13 @@ def hotel_search(request):
     hotels = Hotel.objects.all()
     setting = Setting.objects.latest('id')
     search_key = request.GET.get('key')
+    currency = Currency.objects.all()
     if search_key:
         hotels = Hotel.objects.filter(Q(city__title__icontains   = search_key.title()))
     context = {
         'hotels' : hotels,
         'setting' : setting,
+        'currency':currency
     }
     return render(request, 'hotel/search_hotels.html', context)
 
@@ -60,6 +65,7 @@ def create_hotel(request):
     setting = Setting.objects.latest('id')
     currency = Currency.objects.all()
     places = Places.objects.all()
+    
     if request.method == 'POST':
         if 'booking' in request.POST:
             image = request.FILES.get('image')
@@ -85,6 +91,7 @@ def booking(request, id):
     hotel = Hotel.objects.get(id = id)
     hotel_class = Class.objects.all()
     hotel_people = People.objects.all()
+    currency = Currency.objects.all()
     if request.method == 'POST':
         clas = request.POST.get('class')
         people = request.POST.get('people')
@@ -111,7 +118,8 @@ def booking(request, id):
         'setting':setting,
         'hotel' : hotel,
         'hotel_class':hotel_class,
-        'hotel_people':hotel_people
+        'hotel_people':hotel_people,
+        'currency':currency
     }
 
     return render(request, 'hotel/booking.html', context)

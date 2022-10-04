@@ -20,8 +20,8 @@
                 <div class="form-content">
                     <div class="form-items">
                    
-                        <h3>Register new account</h3>
-                        <p>Access to the most powerfull tool in the entire design and web industry.</p>
+                        <h3>Зарегистрировать новый акаунт</h3>
+                        <p>Доступ к самому мощному инструменту во всей индустрии дизайна и веб-дизайна.</p>
                         <form method="POST">
                             {% csrf_token %}
                             <input class="form-control" type="text" name="username" placeholder="Имя пользователя" required>
@@ -33,11 +33,11 @@
                             </div>
                         </form>
                         <div class="other-links">
-                            <div class="text">Or register with</div>
+                            <div class="text">Или зарегистрируйтесь с</div>
                             <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a><a href="#"><i class="fab fa-google"></i>Google</a><a href="#"><i class="fab fa-linkedin-in"></i>Linkedin</a>
                         </div>
                         <div class="page-links">
-                            <a href="login17.html">Login to account</a>
+                            <a href="{% url 'login' %}">Войти</a>
                         </div>
                     </div>
                 </div>
