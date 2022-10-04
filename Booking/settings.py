@@ -15,6 +15,7 @@ import os
 import django_heroku
 import dj_database_url
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,11 +91,12 @@ WSGI_APPLICATION = 'Booking.wsgi.application'
 DATABASES = {     
 		'default': {
       	'ENGINE': 'django.db.backends.postgresql',
-      	'HOST' : os.environ.get('POSTGRES_HOST', 'ec2-3-93-206-109.compute-1.amazonaws.com'),
-      	'NAME': os.environ.get('POSTGRES_DB', 'd7181q97ef8udh'),
-      	'USER': os.environ.get('POSTGRES_USER', 'qscnrtjhmfwwtq'),
-      	'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '24b7ea43a7b53c199a98b72ff8cc386108893911c6357d5a578f15b55946a3e2'),
+      	'HOST' : os.environ.get('POSTGRES_HOST', 'ec2-52-200-5-135.compute-1.amazonaws.com'),
+      	'NAME': os.environ.get('POSTGRES_DB', 'deus7qeiq333kq'),
+      	'USER': os.environ.get('POSTGRES_USER', 'lvlkkpzasfkzwf'),
+      	'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '3ee88e9f6f08d698f6a6397a149c8be33fd72625fd68c236b864617f326a0bcb'),
       	'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        
     }
 }
 
@@ -129,11 +131,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-EMAIL_USE_TLS = True 
-EMAIL_HOST = 'smtp.gmail.com' 
-EMAIL_PORT = 587 
-EMAIL_HOST_USER = 'zaparovsherdos7@gmail.com' 
-EMAIL_HOST_PASSWORD = 'ojczhrbpmmepwhdh'
 
 
 # Static files (CSS, JavaScript, Images)
