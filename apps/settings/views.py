@@ -50,4 +50,10 @@ def place_detail(request):
 
 def not_setting(request):
     return render(request, 'settings/not_setting.html')
-    
+
+def error_register(request):
+    return render(request, 'settings/error_register.html')
+
+def not_user(request):
+    return render(request, 'settings/not_user.html')
+

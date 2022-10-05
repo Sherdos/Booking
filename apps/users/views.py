@@ -14,15 +14,22 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
         if password == confirm_password:
-            user = User.objects.create(email = email, username = username)
-            user.set_password(password)
-            user.save()
-            user = User.objects.get(username = username)
-            user = authenticate(username = username, password=password)
-            login(request, user)
-            return redirect('index')
+            if username and email and password and confirm_password:
+                try:
+
+                    user = User.objects.create(email = email, username = username)
+                    user.set_password(password)
+                    user.save()
+                    user = User.objects.get(username = username)
+                    user = authenticate(username = username, password=password)
+                    login(request, user)
+                    return redirect('index')
+                except:
+                    return redirect('error_register')
+            else:
+                return redirect('error_register')
         else:
-            return redirect('register')
+            return redirect('error_register')
     context = {
         'setting' : setting
         }
@@ -33,10 +40,13 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = User.objects.get(username = username)
-        user = authenticate(username=username, password = password)
-        login(request, user)
-        return redirect('index')
+        try:
+            user = User.objects.get(username = username)
+            user = authenticate(username=username, password = password)
+            login(request, user)
+            return redirect('index')
+        except:
+            return redirect('not_user')
     context = {
         "setting" : setting
     

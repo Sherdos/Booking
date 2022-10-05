@@ -1,0 +1,34 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+    <!--=====================
+    400 Part HTML Start
+    =======================-->
+    <section class="error-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="error-txt text-center">
+              <h4>Ошибка!</h4>
+            </div>
+            <div class="error-img text-center">
+              <img src="{% static 'images/404.png' %}" class="img-fluid" alt="logo" />
+            </div>
+            <div class="error-bot text-center">
+              <h5>Вы не правильно указали данные. </h5>
+              <h6 style="color: white;">Проверте что пороль был правильно написан</h6>
+              <h6 style="color: white;">и подвержден также попробуте изменить имя так</h6>
+              <h6 style="color: white;">как оно может быть занета.</h6>
+              <a href="{% url 'index' %}" class="btn btn-pills btn-primary" style="margin-top: 20px;">Вернуться домой</a>
+              <a href="{% url 'register' %}" class="btn btn-pills btn-danger" style="margin-top: 20px;">Вернуться назат</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--==================
+    400 Part HTML End
+    ====================-->
+
+
+{% endblock %}
