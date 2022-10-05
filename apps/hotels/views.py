@@ -67,18 +67,16 @@ def create_hotel(request):
     places = Places.objects.all()
     
     if request.method == 'POST':
-        if 'booking' in request.POST:
-            image = request.FILES.get('image')
-            title = request.POST.get('title')
-            description = request.POST.get('description')
-            city = request.POST.get('city')
-            price = request.POST.get('price')
-            currency = request.POST.get('currency')
-            hotel = Hotel.objects.create(user = request.user, title = title, description = description, city_id = city, image = image, price = price, currency_id = currency)
-            return redirect('index')
-        if 'comment' in request.POST:
-            comment = request.POST.get('comment')
-            comments = Comments
+        
+        image = request.FILES.get('image')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        city = request.POST.get('city')
+        price = request.POST.get('price')
+        currency = request.POST.get('currency')
+        hotel = Hotel.objects.create(user = request.user, title = title, description = description, city_id = city, image = image, price = price, currency_id = currency)
+        return redirect('index')
+        
     context = {
         'setting' : setting,
         'currency':currency,
