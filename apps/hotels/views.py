@@ -35,6 +35,8 @@ def detail_hotel(request, id):
             comment = request.POST.get('comment')
             comments = Comments.objects.create(user = request.user, hotel = hotels, comment = comment)
             return redirect('detail_hotel', hotels.id)
+
+
     context = {
         'setting':setting,
         'hotels':hotels,
@@ -85,7 +87,7 @@ def create_hotel(request):
     return render(request, 'hotel/create_hotel.html', context)
 
 def booking(request, id):
-    setting = Setting.objects.all()
+    setting = Setting.objects.latest('id')
     hotel = Hotel.objects.get(id = id)
     hotel_class = Class.objects.all()
     hotel_people = People.objects.all()
@@ -122,5 +124,43 @@ def booking(request, id):
 
     return render(request, 'hotel/booking.html', context)
 
+def update_hotel(request, id):
+    setting = Setting.objects.latest('id')
+    currency = Currency.objects.all()
+    hotel = Hotel.objects.get(id=id)
+    places = Places.objects.all()
 
+    if request.method == 'POST':
+        if 'update' in request.POST:
+            title = request.POST.get('title')
+            description = request.POST.get('desription')
+            city = request.POST.get('city')
+            currency = request.POST.get('currency')
+            price = request.POST.get('price')
+            hotel.title = title
+            hotel.description = description
+            hotel.city_id = city
+            hotel.currency_id = currency
+            hotel.price = price
+            hotel.save()
+            return redirect('detail_hotel', hotel.id)
+        if 'delete' in request.POST:
+            hotel.delete()
+            return redirect('detail_hotel', hotel.id)
+        if 'hotel_image' in request.POST:
+            image = request.FILES.get('image')
+            if image:
+                hotel.image = image
+                hotel.save()
+                return redirect('detail_hotel', hotel.id)
+            else:
+                return redirect('detail_hotel', hotel.id)
+
+    context = {
+        'setting':setting,
+        'currency': currency,
+        'places':places,
+        'hotel':hotel
+    }
+    return render(request, 'hotels/update_hotel.html', context)
 
