@@ -94,7 +94,7 @@
 
         <div class="" style="display: flex;">
           {% if hotels.user == request.user %}
-          <a href="{% url 'update_hotel' %}" class="btn btn-primary"  style="margin-top: 15px;">Настроить</a>
+          <a href="{% url 'update_hotel' hotels.id %}" class="btn btn-primary"  style="margin-top: 15px;">Настроить</a>
           {% else %}
           <input type="text" placeholder="Количество дней">
           <a href="{% url 'booking' hotels.id %}" class="btn btn-warning"  style="margin-top: 15px;">Забронировать отель</a>
