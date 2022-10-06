@@ -93,7 +93,7 @@
             <img src="{{hotels.image.url}}" class="img-fluid" style="height: 300px;" alt="img" />
 
         <div class="" style="display: flex;">
-          {% if user == request.user %}
+          {% if hotels.user == request.user %}
           <a href="#" class="btn btn-primary"  style="margin-top: 15px;">Обновить</a>
           <a href="#" class="btn btn-danger"   style="margin-top: 15px; margin-left: 10px;">Удалить</a>
           {% else %}
