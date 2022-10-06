@@ -7,5 +7,5 @@ urlpatterns = [
     path('hotels/', hotel_search, name='hotel_search'),
     path('create_hotel/', create_hotel, name='create_hotel'),
     path('booking/<int:id>/', booking, name='booking'),
-    path('update/', update_hotel, name='update_hotel')
+    path('update/<int:id>/', update_hotel, name='update_hotel')
 ]
