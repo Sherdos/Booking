@@ -162,5 +162,5 @@ def update_hotel(request, id):
         'places':places,
         'hotel':hotel
     }
-    return render(request, 'hotels/update_hotel.html', context)
+    return render(request, 'hotel/update_hotel.html', context)
 
