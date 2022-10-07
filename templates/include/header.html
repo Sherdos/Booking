@@ -34,7 +34,7 @@
             <li class="list-inline-item mb-0">
                 <div class="dropdown dropdown-primary">
                     {% if user.is_authenticated and request.user == user %}
-                    <a href="{% url 'user_profile' %}"><img src="{{ request.user.profile_image.url }}" class="rounded-pill avatar avatar-sm-sm" alt=""></a>
+                    <a href="{% url 'user_profile' request.user.id %}"><img src="{{ request.user.profile_image.url }}" class="rounded-pill avatar avatar-sm-sm" alt=""></a>
                     {{user.username}}
                     {% endif %}
                 </div>
