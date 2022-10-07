@@ -70,3 +70,12 @@ def status_user(request, id):
     }
     return render(request, 'users/status_user.html', context )
 
+
+def user_profile(request, id):
+    setting = Setting.objects.latest('id')
+    user = User.objects.get(id=id)
+    context = {
+        'setting':setting,
+        'user':user
+    }
+    return render(request, 'user/user_detail.html', context)
