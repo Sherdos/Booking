@@ -78,4 +78,4 @@ def user_profile(request, id):
         'setting':setting,
         'user':user
     }
-    return render(request, 'user/user_detail.html', context)
+    return render(request, 'users/user_detail.html', context)
