@@ -26,6 +26,19 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class Work_us(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'user_us', verbose_name = 'Пользовател')
+    created = models.DateTimeField()
+
+    def __str__(self):
+        return f' {self.user}'
+
+    class Meta:
+        verbose_name = 'Пользователь работаюшии на нас'
+        verbose_name_plural = 'Пользователь работаюшие на нас'
+
         
 
 

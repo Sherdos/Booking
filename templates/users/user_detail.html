@@ -1,48 +1,761 @@
 {% extends 'homepage.html' %}
 {% load static %}
-{% block content%}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- CSS only -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-</head>
-<body>
-  {% include 'include/header.html' %}
-      <div class = "container">
-        {% if user.is_authenticated and request.user == user %}
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+{% block content %}
+        <!-- Loader -->
+        <!-- <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div> -->
+        <!-- Loader -->
+
+        <!-- Navbar STart -->
+        
+        <!-- Navbar End -->
+        {% include 'include/header.html' %}
+        <!-- Start Home -->
+        <section class="bg-creator-profile">
+            <div class="container">
+                <div class="profile-banner">
+                    <input id="pro-banner" name="profile-banner" type="file" class="d-none" onchange="loadFile(event)" />
+                    <div class="position-relative d-inline-block">
+                        <img src="{% static 'images/blog-banner.jpg' %}" class="rounded-md shadow-sm img-fluid" id="profile-banner" alt="">
+                        <label class="icons position-absolute bottom-0 end-0" for="pro-banner"><span class="btn btn-icon btn-sm btn-pills btn-primary"><i data-feather="camera" class="icons"></i></span></label>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div class="text-center mt-n80">
+                            <div class="profile-pic">
+                                <input id="pro-img" name="profile-image" type="file" class="d-none" onchange="loadFile(event)" />
+                                <div class="position-relative d-inline-block">
+                                    <img src="{{ user.profile_image.url }}" class="avatar avatar-medium img-thumbnail rounded-pill shadow-sm" id="profile-image" alt="">
+                                    <label class="icons position-absolute bottom-0 end-0" for="pro-img"><span class="btn btn-icon btn-sm btn-pills btn-primary"><i data-feather="camera" class="icons"></i></span></label>
+                                </div>
+                            </div>
+
+                            <div class="content mt-3">
+                                <h5 class="mb-3">{{ user.username }}</h5>
+                                <h6 class="mt-3 mb-0">{{ user.first_name }} {{ user.last_name }}</h6>
+                                {% if user.status_user == True %}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <a href="" class="btn btn-danger rounded-md" style="margin-top: 10px;">Этот аккаунт работает с нами.</a>
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                                {% endif %}
+                                <h6 class="mt-3 mb-0">На сайте с {{ user.date_joined }}</h6>
+                                {% if request.user == user %}
+                                <div class="mt-4">
+                                    <a href="{% url 'update_user' request.user.id %}" class="btn btn-pills btn-outline-primary mx-1">Настройки аккаунта</a>
+                                    <a href="#" class="btn btn-pills btn-icon btn-outline-primary mx-1"><i class="uil uil-folder-upload"></i></a>
+                                </div>
+                                {% if user.status_user == False %}
+                                <div class="mt-4">
+                                    <a href="#" class="btn btn-pills btn-outline-danger mx-1">Сделать PRO (1000 KGS)</a> 
+                                </div>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <h1>Вы точно хотите удалить аккаунт: {{ user.username }}?</h1>
-            <button type="submit" class="btn btn-danger">Удалить</button>
-          </form>
-        {% else %}
-          <h3>У вас нету прав</h3>
-        {% endif %}
-      </div>
-      <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-          <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-              <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-            <span class="mb-3 mb-md-0 text-muted">© 2022 Facebook, Inc</span>
-          </div>
-          <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a href="#" class="nav-link px-2 text-muted">Твиттер</a></li>
-            <li class="ms-3"><a href="#" class="nav-link px-2 text-muted">Фейсбук</a></li>
-            <li class="ms-3"><a href="#" class="nav-link px-2 text-muted">Телеграм</a></li>
-          </ul>
-        </footer>
-      </div>
-</body>
-</html>
+            <div class="container mt-100 mt-60">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs border-bottom" id="myTab" role="tablist">
+                            
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="Liked-tab" data-bs-toggle="tab" data-bs-target="#Liked" type="button" role="tab" aria-controls="Liked" aria-selected="false">Активные объявления</button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="Sale-tab" data-bs-toggle="tab" data-bs-target="#Sale" type="button" role="tab" aria-controls="Sale" aria-selected="false">Неактивные объявления</button>
+                            </li>
+
+                            
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="About-tab" data-bs-toggle="tab" data-bs-target="#About" type="button" role="tab" aria-controls="About" aria-selected="false">О пользователе</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-4 pt-2" id="myTabContent">
+                            <div class="tab-pane fade show active" id="Liked" role="tabpanel" aria-labelledby="Liked-tab">
+                                <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-4">
+                                    {% for hotel in user.hotel_user.all %}
+                              
+                                    <div class="col">
+                                        <div class="card nft-items nft-primary rounded-md shadow overflow-hidden mb-1 p-3">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="img-group">
+                                                    <a href="" class="user-avatar">
+                                                        <img src="{{ hotel.user.profile_image.url }}" alt="user" class="avatar avatar-sm-sm img-thumbnail border-0 shadow-sm rounded-circle">
+                                                    </a>
+                                                </div>
+                                                
+                                                
+                                            </div>
+                
+                                            <div class="nft-image rounded-md mt-3 position-relative overflow-hidden">
+                                                <a href=""><img src="{{ hotel.image.url }}" class="img-fluid" alt=""></a>
+                                                <div class="position-absolute top-0 start-0 m-2">
+                                                    <a href="javascript:void(0)" class="badge badge-link bg-primary">{{ hotel.city.title }}</a>
+                                                    <a href="javascript:void(0)" class="badge badge-link bg-primary">{{ hotel. }}</a>
+                                                </div>
+                
+                                                
+                                            </div>
+                
+                                            <div class="card-body content position-relative p-0 mt-3">
+                                                <a href="{% url 'detail_hotel' hotel.id %}" class="title text-dark h6">{{ hotel.title   }}</a>
+                
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <small class="rate fw-bold">{{ hotel.price }} {{ hotel.currency }}</small>
+                                                    <!-- <small class="text-dark fw-bold">{{ hotel.created|truncatewords:1 }}</small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                
+                                    {% endfor %}
+                                </div><!--end row-->
+                            </div>
+                            <div class="tab-pane fade" id="Sale" role="tabpanel" aria-labelledby="Sale-tab">
+                                <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-4">
+                                    {% for product in user.hotel_user.all %}
+                                   
+                                    <div class="col">
+                                        <div class="card nft-items nft-primary rounded-md shadow overflow-hidden mb-1 p-3">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="img-group">
+                                                    <a href="" class="user-avatar">
+                                                        <img src="{{ product.user.profile_image.url }}" alt="user" class="avatar avatar-sm-sm img-thumbnail border-0 shadow-sm rounded-circle">
+                                                    </a>
+                                                </div>
+                                                
+                                               
+                                            </div>
+                
+                                            <div class="nft-image rounded-md mt-3 position-relative overflow-hidden">
+                                                <a href=""><img src="{{ product.product_image.url }}" class="img-fluid" alt=""></a>
+                                                <div class="position-absolute top-0 start-0 m-2">
+                                                    <a href="javascript:void(0)" class="badge badge-link bg-primary">{{ product.category.title }}</a>
+                                                </div>
+                
+                                               
+                                            </div>
+                
+                                            <div class="card-body content position-relative p-0 mt-3">
+                                                <a href="" class="title text-dark h6">{{ product.title   }}</a>
+                
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <small class="rate fw-bold">{{ product.price }} {{ product.currency }}</small>
+                                                    <small class="text-dark fw-bold">{{ product.created|truncatewords:1 }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                
+                               
+                                    {% endfor %}
+                                   
+                                </div><!--end row-->
+                            </div>
+
+                            <div class="tab-pane fade" id="Collection" role="tabpanel" aria-labelledby="Collection-tab">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-5 col-md-8 text-center">
+                                        <img src="images/svg/products-to-cart-or-basket.svg" class="img-fluid" alt="">
+
+                                        <div class="content mt-4">
+                                            <h5 class="mb-4">No Collection</h5>
+                                            <p class="text-muted">Save interesting shots into personalized collections, and discover new and interesting recommendations along the way.</p>
+                                        </div>
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </div>
+
+                            <div class="tab-pane fade" id="Activites" role="tabpanel" aria-labelledby="Activites-tab">
+                                <div class="row g-4">
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/items/1.jpg" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-account-check mdi-18px text-success"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-0 h6 d-block">Digital Art Collection</a>
+                                                    <small class="text-muted d-block mt-1">Started Following <a href="javascript:void(0)" class="link fw-bold">@Panda</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">1 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/gif/1.gif" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-heart mdi-18px text-danger"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">Skrrt Cobain Official</a>
+                                                    <small class="text-muted d-block mt-1">Liked by <a href="javascript:void(0)" class="link fw-bold">@ButterFly</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">2 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/items/2.jpg" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-heart mdi-18px text-danger"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">Wow! That Brain Is Floating</a>
+                                                    <small class="text-muted d-block mt-1">Liked by <a href="javascript:void(0)" class="link fw-bold">@ButterFly</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">2 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/items/3.jpg" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-format-list-bulleted mdi-18px text-warning"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">Our Journey Start</a>
+                                                    <small class="text-muted d-block mt-1">Listed by <a href="javascript:void(0)" class="link fw-bold">@CalvinCarlo</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">5 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/gif/2.gif" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-heart mdi-18px text-danger"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">BitBears</a>
+                                                    <small class="text-muted d-block mt-1">Liked by <a href="javascript:void(0)" class="link fw-bold">@ButterFly</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">8 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/items/4.jpg" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-heart mdi-18px text-danger"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">Little Kokeshi #13</a>
+                                                    <small class="text-muted d-block mt-1">Liked by <a href="javascript:void(0)" class="link fw-bold">@ButterFly</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">1 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/gif/3.gif" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-account-check mdi-18px text-success"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">EVOL Floater</a>
+                                                    <small class="text-muted d-block mt-1">Started Following <a href="javascript:void(0)" class="link fw-bold">@CutieGirl</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">13 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/gif/4.gif" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-format-list-bulleted mdi-18px text-warning"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">Smart Ape Club (SAC) - Limited Edition</a>
+                                                    <small class="text-muted d-block mt-1">Listed by <a href="javascript:void(0)" class="link fw-bold">@CalvinCarlo</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">18 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/gif/5.gif" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-format-list-bulleted mdi-18px text-warning"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">THE SECRET SOCIETY XX #775</a>
+                                                    <small class="text-muted d-block mt-1">Listed by <a href="javascript:void(0)" class="link fw-bold">@CalvinCarlo</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">23 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-12">
+                                        <div class="card activity activity-primary rounded-md shadow p-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/items/5.jpg" class="avatar avatar-md-md rounded-md shadow-md" alt="">
+    
+                                                    <div class="position-absolute top-0 start-0 translate-middle px-1 rounded-lg shadow-md bg-white">
+                                                        <i class="mdi mdi-heart mdi-18px text-danger"></i>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <span class="content ms-3">
+                                                    <a href="javascript:void(0)" class="text-dark title mb-1 h6 d-block">Create Your Own World</a>
+                                                    <small class="text-muted d-block mt-1">Liked by <a href="javascript:void(0)" class="link fw-bold">@ButterFly</a></small>
+                                                    
+                                                    <small class="text-muted d-block mt-1">24 hours ago</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                </div><!--end row-->
+    
+                                <div class="row">
+                                    <div class="col-12 text-center mt-4">
+                                        <a href="javascript:void(0)" class="btn btn-link primary text-dark">Load More <i class="uil uil-arrow-right"></i></a>
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </div>
+
+                            <div class="tab-pane fade" id="Followers" role="tabpanel" aria-labelledby="Followers-tab">
+                                <h5 class="mb-4">6 Followers</h5>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="p-4 rounded-md shadow users user-primary">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/client/02.jpg" class="avatar avatar-md-md rounded-pill shadow-sm img-thumbnail" alt="">
+                                                    <div class="position-absolute bottom-0 end-0">
+                                                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-sm btn-primary"><i class="uil uil-plus"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="content ms-3">
+                                                    <h6 class="mb-0"><a href="creator-profile.html" class="text-dark name">CutieGirl</a></h6>
+                                                    <small class="text-muted d-flex align-items-center"><i class="uil uil-map-marker fs-5 me-1"></i> Brookfield, WI</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="border-top my-4"></div>
+                                            <div class="row row-cols-xl-6 g-3">
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/1.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/2.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/gif/3.gif" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/4.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/5.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/gif/4.gif" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="p-4 rounded-md shadow users user-primary">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/client/13.jpg" class="avatar avatar-md-md rounded-pill shadow-sm img-thumbnail" alt="">
+                                                    <div class="position-absolute bottom-0 end-0">
+                                                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-sm btn-primary"><i class="uil uil-plus"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="content ms-3">
+                                                    <h6 class="mb-0"><a href="creator-profile.html" class="text-dark name">FunnyGuy</a></h6>
+                                                    <small class="text-muted d-flex align-items-center"><i class="uil uil-map-marker fs-5 me-1"></i> Brookfield, WI</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="border-top my-4"></div>
+                                            <div class="row row-cols-xl-6 g-3">
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/3.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/gif/1.gif" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/9.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/6.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/1.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/gif/2.gif" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="p-4 rounded-md shadow users user-primary">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/client/03.jpg" class="avatar avatar-md-md rounded-pill shadow-sm img-thumbnail" alt="">
+                                                    <div class="position-absolute bottom-0 end-0">
+                                                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-sm btn-primary"><i class="uil uil-plus"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="content ms-3">
+                                                    <h6 class="mb-0"><a href="creator-profile.html" class="text-dark name">NorseQueen</a></h6>
+                                                    <small class="text-muted d-flex align-items-center"><i class="uil uil-map-marker fs-5 me-1"></i> Brookfield, WI</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="border-top my-4"></div>
+                                            <div class="row row-cols-xl-6 g-3">
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/gif/5.gif" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/2.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/gif/6.gif" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/4.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/5.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="p-4 rounded-md shadow users user-primary">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/client/04.jpg" class="avatar avatar-md-md rounded-pill shadow-sm img-thumbnail" alt="">
+                                                    <div class="position-absolute bottom-0 end-0">
+                                                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-sm btn-primary"><i class="uil uil-plus"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="content ms-3">
+                                                    <h6 class="mb-0"><a href="creator-profile.html" class="text-dark name">BigBull</a></h6>
+                                                    <small class="text-muted d-flex align-items-center"><i class="uil uil-map-marker fs-5 me-1"></i> Brookfield, WI</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="border-top my-4"></div>
+                                            <div class="row row-cols-xl-6 g-3">
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/7.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/8.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/9.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/10.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="p-4 rounded-md shadow users user-primary">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/client/10.jpg" class="avatar avatar-md-md rounded-pill shadow-sm img-thumbnail" alt="">
+                                                    <div class="position-absolute bottom-0 end-0">
+                                                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-sm btn-primary"><i class="uil uil-plus"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="content ms-3">
+                                                    <h6 class="mb-0"><a href="creator-profile.html" class="text-dark name">KristyHoney</a></h6>
+                                                    <small class="text-muted d-flex align-items-center"><i class="uil uil-map-marker fs-5 me-1"></i> Brookfield, WI</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="border-top my-4"></div>
+                                            <div class="row row-cols-xl-6 g-3">
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/1.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/2.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/3.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/4.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/5.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/6.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
+                                        </div>
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="p-4 rounded-md shadow users user-primary">
+                                            <div class="d-flex align-items-center">
+                                                <div class="position-relative">
+                                                    <img src="images/client/12.jpg" class="avatar avatar-md-md rounded-pill shadow-sm img-thumbnail" alt="">
+                                                    <div class="position-absolute bottom-0 end-0">
+                                                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-sm btn-primary"><i class="uil uil-plus"></i></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="content ms-3">
+                                                    <h6 class="mb-0"><a href="creator-profile.html" class="text-dark name">Princess</a></h6>
+                                                    <small class="text-muted d-flex align-items-center"><i class="uil uil-map-marker fs-5 me-1"></i> Brookfield, WI</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="border-top my-4"></div>
+                                            <div class="row row-cols-xl-6 g-3">
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/5.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/8.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/4.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/7.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/5.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                                
+                                                <div class="col">
+                                                    <a href="item-detail-one.html" class="user-item"><img src="images/items/10.jpg" class="img-fluid rounded-md shadow-sm" alt=""></a>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
+                                        </div>
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </div>
+
+                            <div class="tab-pane fade" id="About" role="tabpanel" aria-labelledby="About-tab">
+                                <h5 class="mb-4">Calvin Carlo</h5>
+
+                                <p class="text-muted mb-0">I have started my career as a trainee and prove my self and achieve all the milestone with good guidance and reach up to the project manager. In this journey, I understand all the procedure which make me a good developer, team leader, and a project manager.</p>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- End Home -->
+
+        <!-- Footer Start -->
+       
+        <!-- Footer End -->
+
+        <!-- Back to top -->
+        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top rounded-pill fs-5"><i data-feather="arrow-up" class="fea icon-sm icons align-middle"></i></a>
+        <!-- Back to top -->
+
+        <!-- Wallet Modal -->
+        <div class="modal fade" id="modal-metamask" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">                    
+                <div class="modal-content justify-content-center border-0 shadow-md rounded-md position-relative">
+                    <div class="position-absolute top-0 start-100 translate-middle z-index-1">
+                        <button type="button" class="btn btn-icon btn-pills btn-sm btn-light btn-close opacity-10" data-bs-dismiss="modal" id="close-modal"><i class="uil uil-times fs-4"></i></button>
+                    </div>
+
+                    <div class="modal-body p-4 text-center">
+                        <img src="images/wallet/MetaMask_Fox.svg" class="avatar avatar-md-md rounded-circle shadow-sm " alt="">
+
+                        <div class="content mt-4">
+                            <h5 class="text-danger mb-4">Error!</h5>
+
+                            <P class="text-muted">Please Download MetaMask and create your profile and wallet in MetaMask. Please click and check the details,</P>
+
+                            <a href="https://metamask.io/" class="btn btn-link primary text-primary fw-bold" target="_blank">MetaMask</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Wallet Modal -->
+
+        <!-- Style switcher -->
+        <div id="style-switcher" class="bg-light border p-3 pt-2 pb-2" onclick="toggleSwitcher()">
+            <div class="content">
+                <h6 class="title text-center">Select Your Color</h6>
+                <ul class="pattern">
+                    <li class="list-inline-item">
+                        <a class="color1" href="javascript: void(0);" onclick="setColor('default')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="color2" href="javascript: void(0);" onclick="setColor('yellow')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="color4" href="javascript: void(0);" onclick="setColor('red')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="color5" href="javascript: void(0);" onclick="setColor('purple')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="color6" href="javascript: void(0);" onclick="setColor('saffron')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="color7" href="javascript: void(0);" onclick="setColor('pink')"></a>
+                    </li>
+                </ul>
+
+                <h6 class="title text-center pt-3 mb-0 border-top">Theme Option</h6>
+                <ul class="text-center list-unstyled mb-0">
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-primary rtl-version t-rtl-light mt-2" onclick="setTheme('style-rtl')">RTL</a></li>
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-primary ltr-version t-ltr-light mt-2" onclick="setTheme('style')">LTR</a></li>
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-primary dark-rtl-version t-rtl-dark mt-2" onclick="setTheme('style-dark-rtl')">RTL</a></li>
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-primary dark-ltr-version t-ltr-dark mt-2" onclick="setTheme('style-dark')">LTR</a></li>
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-dark dark-version t-dark mt-2" onclick="setTheme('style-dark')">Dark</a></li>
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-dark light-version t-light mt-2" onclick="setTheme('style')">Light</a></li>
+                </ul>
+
+                <h6 class="title text-center pt-3 mb-0 border-top">Download</h6>
+                <ul class="text-center list-unstyled mb-0">
+                    <li><a href="https://1.envato.market/superex" target="_blank" class="btn btn-sm btn-block btn-warning mt-2 w-100">Download</a></li>
+                </ul>
+            </div>
+            <div class="bottom p-0">
+                <a href="javascript: void(0);" class="settings bg-white title-bg-dark shadow d-flex align-items-center justify-content-center"><i class="mdi mdi-cog mdi-24px position-absolute mdi-spin text-primary"></i></a>
+            </div>
+        </div>
+        <!-- end Style switcher -->
+        
 {% endblock %}
