@@ -20,6 +20,9 @@ class User(AbstractUser):
         verbose_name = 'Статус пользователя',
         default = False
     )
+    balans = models.PositiveBigIntegerField(
+        verbose_name = 'Баланс'
+    )
     def __str__(self):
         return self.username
 

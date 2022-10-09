@@ -55,13 +55,17 @@ def status_user(request, id):
     setting = Setting.objects.latest('id')
     if request.method == 'POST':
         if user.status_user == False:
-            user.status_user = True
-            user.save()
-            now = datetime.now()
-            end_work = timedelta(30)
-            end = now + end_work
-            work_us = Work_us.objects.create(user = request.user, created = end)
-            return redirect('index')
+            try:
+                user.balans -= 500
+                user.status_user = True
+                user.save()
+                now = datetime.now()
+                end_work = timedelta(30)
+                end = now + end_work
+                work_us = Work_us.objects.create(user = request.user, created = end)
+                return redirect('index')
+            except:
+                return redirect('no_money')
     context = {
         'user' :user,
         'setting': setting

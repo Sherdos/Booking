@@ -77,3 +77,5 @@ def error_register(request):
 def not_user(request):
     return render(request, 'settings/not_user.html')
 
+def no_money(request):
+    return render(request, 'settings/no_money.html')
