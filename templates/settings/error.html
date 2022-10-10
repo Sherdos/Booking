@@ -17,11 +17,11 @@
               <img src="{% static 'images/404.png' %}"  alt="logo" />
             </div>
             <div class="error-bot text-center">
-              <h5>У вас не достаточно денег. </h5>
-              <h6 style="color: white;">Пополните баланс</h6>
+              <h5>Страница не найдена. </h5>
+              <h6 style="color: white;">Такой страницы не существует.</h6>
               
               <a href="{% url 'index' %}" class="btn btn-pills btn-primary" style="margin-top: 20px;">Вернуться домой</a>
-              <a href="{% url 'status_user' request.user.id %}" class="btn btn-pills btn-danger" style="margin-top: 20px;">Вернуться назат</a>
+              <a href="{% url 'login' %}" class="btn btn-pills btn-danger" style="margin-top: 20px;">Вернуться назат</a>
           </div>
         </div>
       </div>

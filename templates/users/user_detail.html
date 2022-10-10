@@ -52,11 +52,10 @@
                                 {% if request.user == user %}
                                 <div class="mt-4">
                                     <a href="{% url 'update_user' request.user.id %}" class="btn btn-pills btn-outline-primary mx-1">Настройки аккаунта</a>
-                                    <a href="#" class="btn btn-pills btn-icon btn-outline-primary mx-1"><i class="uil uil-folder-upload"></i></a>
                                 </div>
                                 {% if user.status_user == False %}
                                 <div class="mt-4">
-                                    <a href="#" class="btn btn-pills btn-outline-danger mx-1">Сделать PRO (1000 KGS)</a> 
+                                    <a href="{% url 'status_user' request.user.id %}" class="btn btn-pills btn-outline-danger mx-1">Работать с нами (500 KGS)</a> 
                                 </div>
                                 {% endif %}
                                 {% endif %}

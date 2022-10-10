@@ -25,10 +25,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('index/', include('apps.settings.urls') ),
-    path('user', include('apps.users.urls')),
+    path('user/', include('apps.users.urls')),
     path('logout/', LogoutView.as_view(next_page = 'index'), name = 'logout'),
     path('', include('apps.places.urls') ),
-    path('detail/hotel', include('apps.hotels.urls'))
+    path('hotel/', include('apps.hotels.urls')),
+    path('accounts/', include('allauth.urls')),
+   
 ]
     
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+#1048720379987-4j6hti6u118p6ucn5advuu6umm99c1pv.apps.googleusercontent.com Client
+##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

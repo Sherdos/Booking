@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
+from locale import currency
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render,redirect
 from apps.hotels.models import Hotel
-from apps.settings.models import Setting
+from apps.settings.models import Currency, Setting
 from apps.users.models import User, Work_us
 # Create your views here.
 def register(request):
@@ -76,10 +77,12 @@ def user_profile(request, id):
     setting = Setting.objects.latest('id')
     user = User.objects.get(id=id)
     hotel = Hotel.objects.all()
+    currency = Currency.objects.all()
     context = {
         'setting':setting,
         'user':user,
         'hotel':hotel,
+        'currency':currency
     }
     return render(request, 'users/user_detail.html', context)
 

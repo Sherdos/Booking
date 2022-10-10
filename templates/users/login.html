@@ -1,11 +1,12 @@
 {% extends 'homepage.html' %}
 {% load static %}
+{% load socialaccount %}
 {% block content %}
     <div class="form-body without-side">
         <div class="website-logo">
-            <a href="index.html">
+            <a href="{% url 'index' %}">
                 <div class="logo">
-                    <img class="logo-size" src="images/logo-light.svg" alt="">
+                    <img class="logo-size" src="{{setting.logo.url}}" alt="">
                 </div>
             </a>
         </div>
@@ -20,7 +21,7 @@
                 <div class="form-content">
                     <div class="form-items">
                         <h3>Войти в аккаунт</h3>
-                        <p>Доступ к самому мощному инструменту во всей индустрии дизайна и веб-дизайна</p>
+                        
                         <form method="post">
                             {% csrf_token %}
                             <input class="form-control" type="text" name="username" placeholder="Имя пользователя" required>
@@ -31,7 +32,7 @@
                         </form>
                         <div class="other-links">
                             <div class="text">Или войдите с помощью</div>
-                            <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a><a href="#"><i class="fab fa-google"></i>Google</a><a href="#"><i class="fab fa-linkedin-in"></i>Linkedin</a>
+                            <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a><a href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>Google</a>
                         </div>
                         <div class="page-links">
                             <a href="{% url 'register' %}">

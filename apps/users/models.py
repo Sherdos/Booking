@@ -21,7 +21,8 @@ class User(AbstractUser):
         default = False
     )
     balans = models.PositiveBigIntegerField(
-        verbose_name = 'Баланс'
+        verbose_name = 'Баланс',
+        default = 0
     )
     def __str__(self):
         return self.username

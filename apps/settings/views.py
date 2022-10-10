@@ -17,7 +17,10 @@ def index(request):
     except:
         return redirect('not_setting')
     comments = Comments.objects.all().order_by('?')[:3]
-    user = User.objects.get(username=request.user.username)
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        print('error')
     currency = Currency.objects.all()
     nation = Nation.objects.all().order_by('?')[:5]
     places = Places_for_rest.objects.all().order_by('?')[:4]

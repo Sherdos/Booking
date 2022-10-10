@@ -4,8 +4,14 @@ from apps.places.models import Places
 from apps.users.models import User
 
 # Create your models here.
+
+# People 
+
 class People(models.Model):
-    people = models.CharField( max_length = 255, verbose_name = 'Тип бронирование')
+    people = models.CharField(
+        max_length = 255,
+        verbose_name = 'Тип бронирование'
+        )
 
     def __str__(self):
         return self.people
@@ -14,10 +20,13 @@ class People(models.Model):
         verbose_name = 'Тип бронирование'
         verbose_name_plural = 'Тип бронирование'
 
-
+# Class
 
 class Class(models.Model):
-    clas = models.CharField( max_length=255, verbose_name = 'Класс номера')
+    clas = models.CharField(
+        max_length=255,
+        verbose_name = 'Класс номера'
+        )
     
     def __str__(self):
         return self.clas
@@ -26,43 +35,106 @@ class Class(models.Model):
         verbose_name = 'Класс номера'
         verbose_name_plural = 'Класс номеров'
 
-
-
+# Hotel
 
 class Hotel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'hotel_user', verbose_name = 'Владелец')
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    image = models.ImageField(upload_to = 'advertisement_image')
-    currency = models.ForeignKey(Currency, on_delete=models.CASCADE, related_name='currency_buy',verbose_name='Название валюты')
-    price = models.PositiveBigIntegerField(verbose_name='Цена')
-    city = models.ForeignKey(Places, on_delete=models.CASCADE, related_name='place_slug', verbose_name='Местоположение')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name = 'hotel_user',
+        verbose_name = 'Владелец'
+        )
+    title = models.CharField(
+        max_length=255
+        )
+    description = models.TextField(
+        verbose_name = 'Описание отеля'
+    )
+    image = models.ImageField(
+        upload_to = 'advertisement_image',
+        verbose_name = 'Фотография отеля'
+        )
+    currency = models.ForeignKey(
+        Currency,
+        on_delete=models.CASCADE,
+        related_name='currency_buy',
+        verbose_name='Название валюты'
+        )
+    price = models.PositiveBigIntegerField(
+        verbose_name='Цена'
+        )
+    city = models.ForeignKey(
+        Places,
+        on_delete=models.CASCADE,
+        related_name='place_slug',
+        verbose_name='Местоположение')
     def __str__(self):
         return self.title
     class Meta:
         verbose_name = 'Отель'
         verbose_name_plural = 'Отели'
 
+# Booking
 
 class Booking(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'user_booking', verbose_name = 'Заказшик')
-    clas = models.ForeignKey(Class, on_delete = models.CASCADE, related_name = 'class_hotel', verbose_name = 'Класс')
-    people = models.ForeignKey(People, on_delete = models.CASCADE, related_name = 'people_hotel', verbose_name = 'Количество людей')
-    date1 = models.CharField(max_length = 255, verbose_name = 'дата отправки')
-    date2 = models.CharField(max_length = 255, verbose_name = 'дата отезда')
-    hotel = models.ForeignKey(Hotel, on_delete = models.CASCADE, related_name = 'hotel_booking', verbose_name = 'Отель')
+    user = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE,
+        related_name = 'user_booking',
+        verbose_name = 'Заказшик'
+        )
+    clas = models.ForeignKey(
+        Class,
+        on_delete = models.CASCADE,
+        related_name = 'class_hotel',
+        verbose_name = 'Класс'
+        )
+    people = models.ForeignKey(
+        People,
+        on_delete = models.CASCADE,
+        related_name = 'people_hotel',
+        verbose_name = 'Количество людей'
+        )
+    date1 = models.CharField(
+        max_length = 255,
+        verbose_name = 'дата отправки'
+        )
+    date2 = models.CharField(
+        max_length = 255,
+        verbose_name = 'дата отезда'
+        )
+    hotel = models.ForeignKey(
+        Hotel, on_delete = models.CASCADE,
+        related_name = 'hotel_booking',
+        verbose_name = 'Отель')
+
     def __str__(self):
         return f'{self.hotel}'
     class Meta:
         verbose_name = 'Забронированый отель'
         verbose_name_plural = 'Забронированые отели'
 
+# Comments
 
 class Comments(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'user_comment', verbose_name = 'Ползователь')
-    hotel = models.ForeignKey(Hotel, on_delete = models.CASCADE, related_name = 'hotel_comment', verbose_name = 'отель' )
-    created = models.DateTimeField(auto_now_add=True)
-    comment = models.TextField(verbose_name = 'Коментарии')
+    user = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE,
+        related_name = 'user_comment',
+        verbose_name = 'Ползователь'
+        )
+    hotel = models.ForeignKey(
+        Hotel,
+        on_delete = models.CASCADE,
+        related_name = 'hotel_comment',
+        verbose_name = 'отель'
+        )
+    created = models.DateTimeField(
+        auto_now_add=True
+        )
+    comment = models.TextField(
+        verbose_name = 'Коментарии'
+        )
 
     def __str__(self):
         return f'{self.user}'

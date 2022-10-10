@@ -7,19 +7,17 @@ from apps.places.models import Places
 from apps.hotels.models import Booking, Hotel, People, Class, Comments
 from django.core.mail import send_mail
 # Create your views here.
-# def hotel_search(request, slug):
-#     setting = Setting.objects.latest('id')
-#     places = Places.objects.get(slug = slug)
-#     if request.method == 'POST':
-#         if 'hotel_detail' in request.POST:
-#             slug = request.POST.get(slug)
-#             return redirect('hotel',places.slug)
-#     context = {
-#         'setting' : setting,
-#         'places' : places
-#     }
-#     return render(request, 'index.html', context)
 
+def hotel(request, slug):
+    setting = Setting.objects.latest('id')
+    places = Places.objects.get(slug = slug)
+    currency = Currency.objects.all()
+    context = {
+        'setting':setting,
+        'places' :places,
+        'currency':currency
+    }
+    return render(request, 'hotel/hotel.html', context)
 
 
 def detail_hotel(request, id):
@@ -35,8 +33,6 @@ def detail_hotel(request, id):
             comment = request.POST.get('comment')
             comments = Comments.objects.create(user = request.user, hotel = hotels, comment = comment)
             return redirect('detail_hotel', hotels.id)
-
-
     context = {
         'setting':setting,
         'hotels':hotels,
@@ -63,13 +59,12 @@ def hotel_search(request):
     }
     return render(request, 'hotel/search_hotels.html', context)
 
+
 def create_hotel(request):
     setting = Setting.objects.latest('id')
     currency = Currency.objects.all()
     places = Places.objects.all()
-    
     if request.method == 'POST':
-        
         image = request.FILES.get('image')
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -78,13 +73,13 @@ def create_hotel(request):
         currency = request.POST.get('currency')
         hotel = Hotel.objects.create(user = request.user, title = title, description = description, city_id = city, image = image, price = price, currency_id = currency)
         return redirect('index')
-        
     context = {
         'setting' : setting,
         'currency':currency,
         'places':places
      }
     return render(request, 'hotel/create_hotel.html', context)
+
 
 def booking(request, id):
     setting = Setting.objects.latest('id')
@@ -97,8 +92,7 @@ def booking(request, id):
         people = request.POST.get('people')
         date1 = request.POST.get('date1')
         date2 = request.POST.get('date2')
-        email = hotel.user.email
-        
+        email = request.user.email
         booking = Booking.objects.create(user = request.user,  hotel = hotel, clas_id = clas, people_id = people, date1 = date1, date2 = date2)
         send_mail(
                     #title:
@@ -109,11 +103,8 @@ def booking(request, id):
                     'noreply@somehost.local',
                     #to:
                     [email]
-
         )
         return redirect('index')
-    
-
     context = {
         'setting':setting,
         'hotel' : hotel,
@@ -121,15 +112,14 @@ def booking(request, id):
         'hotel_people':hotel_people,
         'currency':currency
     }
-
     return render(request, 'hotel/booking.html', context)
+
 
 def update_hotel(request, id):
     setting = Setting.objects.latest('id')
     currency = Currency.objects.all()
     hotel = Hotel.objects.get(id=id)
     places = Places.objects.all()
-
     if request.method == 'POST':
         if 'update' in request.POST:
             title = request.POST.get('title')
@@ -155,7 +145,6 @@ def update_hotel(request, id):
                 return redirect('detail_hotel', hotel.id)
             else:
                 return redirect('detail_hotel', hotel.id)
-
     context = {
         'setting':setting,
         'currency': currency,
