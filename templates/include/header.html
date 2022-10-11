@@ -58,7 +58,7 @@
                     
                 </select>
                 
-                <li><a href="activity.html" class="sub-menu-item"> Новости</a></li>
+               
 
                 <li><a href="{% url 'about_us' %}" class="sub-menu-item">О нас</a></li>
                 {% if request.user.status_user == False %}
@@ -67,7 +67,7 @@
                 <li><a href="{% url 'create_hotel' %}" class="sub-menu-item">Создать объявление</a></li>
                 {% endif %}
                 
-                <li><a href="{#}" class="sub-menu-item">Контакты</a></li>
+                
                 {% if request.user.is_authenticated %}
                 <li><a href="{% url 'logout' %}" class="sub-menu-item">Выйти</a></li>
                 {% else %}

@@ -93,12 +93,13 @@ def booking(request, id):
         date1 = request.POST.get('date1')
         date2 = request.POST.get('date2')
         email = request.user.email
-        booking = Booking.objects.create(user = request.user,  hotel = hotel, clas_clas = clas, people_people = people, date1 = date1, date2 = date2)
+        booking = Booking.objects.create(user = request.user,  hotel = hotel, clas_id = clas, people_id = people, date1 = date1, date2 = date2)
+        print(booking.clas.clas)
         send_mail(
                     #title:
                     f'Booking',
                     #message:
-                    f'Вашем отеле забронировали номер. Требование, класс номера {clas} для {people}. Заедут в {date1} отедут в {date2}',
+                    f'Вашем отеле забронировали номер. Требование класс номера {booking.clas.clas} для {booking.people.people}. Заедут в {date1} отедут в {date2}',
                     #from:
                     'noreply@somehost.local',
                     #to:
