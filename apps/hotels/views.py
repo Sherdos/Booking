@@ -98,7 +98,7 @@ def booking(request, id):
                     #title:
                     f'Booking',
                     #message:
-                    f'Вашем отеле забронировали номер. Требование класс номера {clas} для {people}. Заедут в {date1} отедут в {date2}',
+                    f'Вашем отеле забронировали номер. Требование класс номера {clas.clas} для {people.people}. Заедут в {date1} отедут в {date2}',
                     #from:
                     'noreply@somehost.local',
                     #to:
