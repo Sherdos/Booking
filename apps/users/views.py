@@ -1,10 +1,18 @@
 from datetime import datetime, timedelta
 from locale import currency
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render,redirect
+
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+
 from apps.hotels.models import Hotel
 from apps.settings.models import Currency, Setting
 from apps.users.models import User, Work_us
+
+
 # Create your views here.
 def register(request):
     setting = Setting.objects.latest('id')
@@ -50,6 +58,32 @@ def login_user(request):
         "setting" : setting
     }
     return render(request, 'users/login.html', context)
+
+def forget(request):
+    setting = Setting.objects.latest('id')
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            check_email = User.objects.get(email = email)
+            print(check_email)
+            send_mail(
+                    # title:
+                    f"Восстановить пароль",
+                    # message:
+                    f"Привет {check_email.username}! Мы получили запрос на сброс пароля для учетной записи Booking, связанной с {email}. Перейдите по ссылке чтобы восстановить доступ к аккаунту http://127.0.0.1:8000/users/reset/{urlsafe_base64_encode(force_bytes(check_email.pk))}/{default_token_generator.make_token(check_email)}",
+                    # from:
+                    "noreply@somehost.local",
+                    # to:
+                    [email]
+            )
+        except:
+            return redirect('forget')
+    context = {
+        'setting' : setting
+    }
+    return render(request, 'users/forget.html', context)
+        
+    
 
 def status_user(request, id):
     user = User.objects.get(id=id)

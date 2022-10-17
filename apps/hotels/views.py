@@ -1,11 +1,13 @@
 
 
-from django.db.models import Q
-from django.shortcuts import render, redirect
-from apps.settings.models import Currency, Setting
-from apps.places.models import Places
-from apps.hotels.models import Booking, Hotel, People, Class, Comments
 from django.core.mail import send_mail
+from django.db.models import Q
+from django.shortcuts import redirect, render
+
+from apps.hotels.models import Booking, Class, Comments, Hotel, People
+from apps.places.models import Places
+from apps.settings.models import Currency, Setting
+
 # Create your views here.
 
 def hotel(request, slug):
@@ -92,7 +94,7 @@ def booking(request, id):
         people = request.POST.get('people')
         date1 = request.POST.get('date1')
         date2 = request.POST.get('date2')
-        email = request.user.email
+        email = hotel.user.email
         booking = Booking.objects.create(user = request.user,  hotel = hotel, clas_id = clas, people_id = people, date1 = date1, date2 = date2)
         print(booking.clas.clas)
         send_mail(

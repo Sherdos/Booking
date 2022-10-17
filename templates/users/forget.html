@@ -1,0 +1,52 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+    <div class="form-body without-side">
+        <div class="website-logo">
+            <a href="{% url 'index' %}">
+                <div class="logo">
+                    <img class="logo-size" src="{{setting.logo.url}}" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img src="images/graphic3.svg" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Восстановление пароля</h3>
+                        <p>Чтобы сбросить пароль, введите адрес электронной почты, который вы используете для входа в аккаунт.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="email" name = 'email' class="form-control" id="floatingInput" placeholder="name@example.com">
+                                    <label for="floatingInput">Адрес электронной почты</label>
+                                </div>
+                            </div><!--end col-->
+            
+                            <div class="col-12">
+                                <button class="btn btn-primary rounded-md w-100" type="submit">Отправлять</button>
+                            </div><!--end col-->
+                        </form>
+                    </div>
+                    <div class="form-sent">
+                        <div class="tick-holder">
+                            <div class="tick-icon"></div>
+                        </div>
+                        <h3>Ссылка на пароль отправлена</h3>
+                        <p>Пожалуйста, проверьте свой почтовый ящик <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f6660697d624f6660697d627b6a627f636e7b6a216660">[email&#160;protected]</a></p>
+                        <div class="info-holder">
+                            <span>Не уверены, что этот адрес электронной почты был правильным?</span> <a href="{% url 'forget' %}">Мы можем помочь</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

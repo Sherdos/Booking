@@ -1,6 +1,7 @@
 from django.db import models
-from apps.settings.models import Currency
+
 from apps.places.models import Places
+from apps.settings.models import Currency
 from apps.users.models import User
 
 # Create your models here.
