@@ -70,7 +70,7 @@ def forget(request):
                     # title:
                     f"Восстановить пароль",
                     # message:
-                    f"Привет {check_email.username}! Мы получили запрос на сброс пароля для учетной записи Booking, связанной с {email}. Перейдите по ссылке чтобы восстановить доступ к аккаунту http://127.0.0.1:8000/users/reset/{urlsafe_base64_encode(force_bytes(check_email.pk))}/{default_token_generator.make_token(check_email)}",
+                    f"Привет {check_email.username}! Мы получили запрос на сброс пароля для учетной записи Booking, связанной с {email}. Перейдите по ссылке чтобы восстановить доступ к аккаунту https://booking26.herokuapp.com/users/reset/{urlsafe_base64_encode(force_bytes(check_email.pk))}/{default_token_generator.make_token(check_email)}",
                     # from:
                     "noreply@somehost.local",
                     # to:
@@ -136,7 +136,7 @@ def update(request, id):
             user.email = email
             user.phone = phone
             user.save()
-            return redirect('user_profile', user.id)
+            return redirect('user_profile', user.id)  
         if 'update_image' in request.POST:
             image = request.FILES.get('image')
             user.profile_image = image
