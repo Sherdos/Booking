@@ -34,8 +34,12 @@
             <li class="list-inline-item mb-0">
                 <div class="dropdown dropdown-primary">
                     {% if user.is_authenticated and request.user == user %}
-                    <a href="{% url 'user_profile' request.user.id %}"><img src="{{ request.user.profile_image.url }}" class="rounded-pill avatar avatar-sm-sm" alt=""></a>
-                    <a href="{% url 'user_profile' request.user.id %}" style="color: black;">{{user.username}}</a>
+                        {% if request.user.profile_image %}
+                        <a href="{% url 'user_profile' request.user.id %}"><img src="{{ request.user.profile_image.url }}" class="rounded-pill avatar avatar-sm-sm" alt=""></a>
+                        {% else %}
+                        <a href="{% url 'user_profile' request.user.id %}"><img src="{% static 'image/no_image.png' %}" class="rounded-pill avatar avatar-sm-sm" alt=""></a>
+                        {% endif %}
+                        <a href="{% url 'user_profile' request.user.id %}" style="color: black;">{{user.username}}</a>
                     /Ваш баланс:{{user.balans}} KGS
                     {% endif %}
                 </div>

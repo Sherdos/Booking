@@ -70,7 +70,7 @@ def forget(request):
                     # title:
                     f"Восстановить пароль",
                     # message:
-                    f"Привет {check_email.username}! Мы получили запрос на сброс пароля для учетной записи Booking, связанной с {email}. Перейдите по ссылке чтобы восстановить доступ к аккаунту https://booking26.herokuapp.com/users/reset/{urlsafe_base64_encode(force_bytes(check_email.pk))}/{default_token_generator.make_token(check_email)}",
+                    f"Привет {check_email.username}! Мы получили запрос на сброс пароля для учетной записи Booking, связанной с {email}. Перейдите по ссылке чтобы восстановить доступ к аккаунту http://192.168.0.103:8000/users/reset/{urlsafe_base64_encode(force_bytes(check_email.pk))}/{default_token_generator.make_token(check_email)}",
                     # from:
                     "noreply@somehost.local",
                     # to:
